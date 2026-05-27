@@ -29,9 +29,17 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresProfile: true },
       children: [
         { path: "", name: "feed", component: () => import("@/views/FeedView.vue") },
+        { path: "search", name: "search", component: () => import("@/views/SearchView.vue") },
         { path: "post/new", name: "post-new", component: () => import("@/views/CreatePostView.vue") },
         { path: "post/:id", name: "post-detail", component: () => import("@/views/PostDetailView.vue") },
+        { path: "user", name: "user-center", component: () => import("@/views/UserCenterView.vue") },
       ],
+    },
+    {
+      path: "/chat",
+      name: "chat",
+      component: () => import("@/views/ChatView.vue"),
+      meta: { guest: true },
     },
   ],
 });
