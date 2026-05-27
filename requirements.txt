@@ -1,0 +1,25 @@
+# WANDERCHINA Community & Data Pipeline
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+pydantic-settings>=2.6.0
+sqlalchemy>=2.0.36
+alembic>=1.14.0
+asyncpg>=0.30.0
+psycopg2-binary>=2.9.10
+redis>=5.2.0
+celery>=5.4.0
+httpx>=0.28.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.17
+elasticsearch>=8.15.0
+pandas>=2.2.0
+# Quality evaluation (optional at runtime)
+nltk>=3.9.0
+rouge-score>=0.1.2
+bert-score>=0.3.13
+# Dev / test
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+httpx>=0.28.0

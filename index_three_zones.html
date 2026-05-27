@@ -1,0 +1,482 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐼 子网页社区 - 多智能体数据生成与标注系统</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f9fafb;min-height:100vh}
+
+/* 黑白熊猫 SVG */
+.panda-svg{display:inline-block;vertical-align:middle;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+.panda-svg-small{width:32px;height:32px}
+.panda-svg-large{width:56px;height:56px}
+
+/* 顶部导航 */
+.top-nav{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);padding:0;position:sticky;top:0;z-index:200;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.top-nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+.logo-section{display:flex;align-items:center;gap:16px;padding:20px 0}
+.logo-text{display:flex;flex-direction:column}
+.logo-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:.5px;display:flex;align-items:center;gap:10px}
+.logo-title span{color:#22c55e}
+.logo-desc{font-size:13px;color:#9ca3af;margin-top:4px}
+.tabs-section{display:flex;gap:8px}
+.tab{padding:16px 28px;border-radius:12px 12px 0 0;color:#d1d5db;cursor:pointer;transition:all .3s;font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;border:2px solid transparent;border-bottom:none}
+.tab:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateY(-2px)}
+.tab.active{background:#fff;color:#111827;border-color:#fff;box-shadow:0 -4px 12px rgba(0,0,0,.1)}
+.tab-icon{font-size:20px}
+
+/* 侧边栏 */
+.sidebar{position:fixed;left:0;top:76px;width:240px;height:calc(100vh - 76px);background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;z-index:100}
+.sidebar-header{padding:24px;border-bottom:1px solid #f3f4f6}
+.sidebar-header-title{font-weight:700;color:#374151;font-size:16px}
+.sidebar-nav{flex:1;padding:16px}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;color:#4b5563;cursor:pointer;transition:all .2s;margin-bottom:4px}
+.sidebar-item:hover{background:#f3f4f6;color:#111827}
+.sidebar-item.active{background:#eff6ff;color:#2563eb;font-weight:600}
+
+/* 主内容区 */
+.main{margin-left:240px;padding:32px;max-width:1400px}
+.content-header{margin-bottom:28px}
+.zone-title{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.zone-badge{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;padding:8px 20px;border-radius:9999px;font-weight:700;font-size:15px}
+.zone-desc{color:#6b7280;font-size:14px}
+
+/* 帖子卡片 */
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:28px}
+.card{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;border:1px solid #f3f4f6;transition:all .3s}
+.card:hover{box-shadow:0 8px 30px rgba(0,0,0,.12);transform:translateY(-2px)}
+.card-pad{padding:26px}
+.flex{display:flex;gap:18px}
+.avatar-wrap{position:relative}
+.panda-wrap{position:absolute;top:-24px;right:-18px;z-index:10}
+.avatar{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.flag{position:absolute;bottom:-8px;right:-8px;font-size:20px}
+.name{font-weight:700;color:#111827;font-size:16px}
+.role-tag{font-size:12px;padding:4px 10px;background:#f3f4f6;color:#374151;border-radius:9999px;margin-left:10px;font-weight:600}
+.time{display:flex;gap:20px;font-size:13px;color:#6b7280;margin-bottom:14px;margin-top:6px}
+.time span{display:flex;align-items:center;gap:6px}
+.content{color:#1f2937;line-height:1.75;font-size:15px;margin-bottom:18px;white-space:pre-wrap}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tag-item{font-size:13px;padding:6px 14px;background:#f3f4f6;color:#374151;border-radius:9999px;font-weight:500;border:1px solid #e5e7eb}
+.actions{display:flex;align-items:center;gap:18px;padding-top:16px;border-top:1px solid #f3f4f6}
+.action-btn{display:flex;align-items:center;gap:8px;color:#6b7280;font-size:14px;cursor:pointer;transition:all .2s;font-weight:500;padding:8px 12px;border-radius:8px}
+.action-btn:hover{color:#2563eb;background:#eff6ff}
+.thinking{background:#f9fafb;border-top:1px solid #e5e7eb;padding:24px}
+.thinking-block{background:#111827;border-radius:12px;padding:18px}
+.thinking-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;font-weight:700;color:#d1d5db}
+.thinking-content{color:#e5e7eb;line-height:1.7;font-size:13px;white-space:pre-wrap;font-family:'SF Mono',Monaco,monospace}
+
+/* 评论区 */
+.comments-section{padding:26px}
+.comments-header{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid #e5e7eb;font-weight:700;color:#111827;font-size:16px}
+.comments-list{margin-top:24px}
+.comment{display:flex;gap:14px}
+.comment-avatar-wrap{position:relative}
+.comment-panda-wrap{position:absolute;top:-18px;right:-12px;z-index:5}
+.comment-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.comment-line{width:2px;background:linear-gradient(180deg,#f3f4f6 0%,#e5e7eb 100%);margin-top:8px;min-height:24px;border-radius:4px}
+.comment-content{flex:1}
+.comment-card{background:#fff;border:1px solid #f3f4f6;border-radius:12px;padding:16px}
+.comment-meta{font-size:14px;color:#111827;margin-bottom:10px}
+.comment-meta span{font-weight:700}
+.comment-time{color:#6b7280;font-size:12px;margin-left:10px}
+.comment-text{color:#374151;font-size:14px;line-height:1.7;margin-bottom:12px}
+.nested{margin-left:54px;margin-top:12px}
+
+/* 评估面板 */
+.panel{position:sticky;top:108px}
+.eval-card{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);overflow:hidden;border:1px solid #f3f4f6}
+.eval-header{padding:22px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff}
+.eval-title{font-size:17px;font-weight:800;display:flex;align-items:center;gap:10px}
+.eval-subtitle{font-size:13px;opacity:.9;margin-top:6px}
+.eval-body{padding:26px}
+.score{margin-bottom:20px}
+.score-label{font-size:14px;font-weight:700;color:#374151;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.score-header{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}
+.score-value{font-weight:800;color:#111827;font-size:16px}
+.score-bar{height:12px;background:#f3f4f6;border-radius:9999px;overflow:hidden}
+.score-fill{height:100%;border-radius:9999px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.score-blue{background:linear-gradient(90deg,#3b82f6 0%,#1d4ed8 100%)}
+.score-green{background:linear-gradient(90deg,#22c55e 0%,#16a34a 100%)}
+.score-purple{background:linear-gradient(90deg,#8b5cf6 0%,#7c3aed 100%)}
+.status{padding:20px;border-top:1px dashed #e5e7eb}
+.pass{background:#ecfdf5;border:2px solid #22c55e;border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;color:#16a34a;font-weight:800;font-size:15px}
+.desc{padding:20px;border-top:1px dashed #e5e7eb}
+.desc-title{font-size:14px;font-weight:800;color:#111827;margin-bottom:14px}
+.desc-item{font-size:13px;color:#4b5563;margin-bottom:10px;line-height:1.6}
+
+/* 动画 */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.animate-float{animation:float 3s ease-in-out infinite}
+.animate-bounce{animation:bounce 2.2s ease-in-out infinite}
+.animate-pulse{animation:pulse 1.5s ease-in-out infinite}
+
+/* 响应式 */
+@media (max-width:1024px){
+.main{margin-left:0;padding:20px}
+.sidebar{display:none}
+.grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="top-nav">
+<div class="top-nav-inner">
+<div class="logo-section">
+<div class="panda-svg panda-svg-large animate-float">
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</div>
+<div class="logo-text">
+<div class="logo-title">子网页社区<span>🐼</span></div>
+<div class="logo-desc">多智能体数据生成与标注系统</div>
+</div>
+</div>
+<div class="tabs-section">
+<div class="tab active" onclick="switchTab(0)">
+<span class="tab-icon">🌍</span> 外国人专区
+</div>
+<div class="tab" onclick="switchTab(1)">
+<span class="tab-icon">🎓</span> 留学生专区
+</div>
+<div class="tab" onclick="switchTab(2)">
+<span class="tab-icon">🏠</span> 本地人专区
+</div>
+</div>
+</div>
+</div>
+
+<!-- 侧边栏 -->
+<div class="sidebar">
+<div class="sidebar-header">
+<div class="sidebar-header-title">📋 快捷导航</div>
+</div>
+<nav class="sidebar-nav">
+<div class="sidebar-item active">🏠 社区沙盒</div>
+<div class="sidebar-item">📊 数据统计</div>
+<div class="sidebar-item">⚙️ 任务配置</div>
+<div class="sidebar-item">📤 数据导出</div>
+</nav>
+</div>
+
+<!-- 主内容 -->
+<div class="main">
+<div class="content-header" id="zoneHeader">
+<div class="zone-title">
+<span class="panda-svg panda-svg-small">
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</span>
+<span class="zone-badge">🌍 外国人专区</span>
+</div>
+<p class="zone-desc">来自世界各地的外国朋友在中国的生活故事</p>
+</div>
+
+<div class="grid">
+<div id="mainContent">
+<!-- 主帖 -->
+<div class="card" style="margin-bottom:28px">
+<div class="card-pad">
+<div class="flex">
+<div class="avatar-wrap">
+<div class="panda-wrap animate-bounce">
+<svg class="panda-svg panda-svg-small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</div>
+<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TouristJohn" class="avatar" alt="Tourist">
+<span class="flag">🇺🇸</span>
+</div>
+<div style="flex:1">
+<div style="margin-bottom:10px">
+<span class="name">John · 美国游客</span>
+<span class="role-tag">首次来华</span>
+</div>
+<div class="time">
+<span>📍 北京故宫</span>
+<span>⏰ 2026/5/20 10:30:00</span>
+</div>
+</div>
+</div>
+<div class="content">Hey everyone! I just arrived in Beijing and tried to buy some souvenirs at the Palace Museum. The vendor only accepts WeChat Pay, but I don't have a Chinese bank account. 😟 Any suggestions on how I can make payments easily in China?<span class="animate-pulse" style="margin-left:6px">|</span></div>
+<div class="tags">
+<span class="tag-item">#移动支付</span>
+<span class="tag-item">#外国游客</span>
+<span class="tag-item">#求助</span>
+</div>
+<div class="actions">
+<div class="action-btn">💬 回复</div>
+<div class="action-btn">🧠 思考过程</div>
+</div>
+</div>
+<div class="thinking">
+<div class="thinking-block">
+<div class="thinking-header">🧠 模型思考链</div>
+<div class="thinking-content">The user is an American tourist in Beijing having payment issues. I need to provide practical, easy-to-understand solutions:
+
+1. Alipay/WeChat Pay international versions - these now work with foreign cards!
+2. Cash options - but note that cash is getting rare
+3. International credit cards - some vendors accept Visa/Mastercard
+4. Asking locals for help - people are usually very friendly!</div>
+</div>
+</div>
+</div>
+
+<!-- 评论 -->
+<div class="card comments-section">
+<div class="comments-header">💬 评论 (3)</div>
+<div class="comments-list">
+<!-- 评论1 -->
+<div class="comment">
+<div class="comment-avatar-wrap">
+<div class="comment-panda-wrap animate-bounce">
+<svg class="panda-svg" style="width:26px;height:26px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</div>
+<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=LocalZhang" class="comment-avatar" alt="Local">
+</div>
+<div class="comment-line"></div>
+<div class="comment-content">
+<div class="comment-card">
+<div class="comment-meta">🇨🇳 <span>小张 · 本地热心人</span> <span class="comment-time">10:31</span></div>
+<div class="comment-text">嘿哥们儿，别慌！我来帮你！你可以下载"支付宝"或"微信"的国际版，现在支持绑定境外银行卡了！超方便的！或者去7-11买东西的时候让店员帮你充点钱到钱包里，也能用！</div>
+<div class="action-btn">↩️ 回复</div>
+</div>
+</div>
+</div>
+
+<!-- 评论2 -->
+<div class="comment nested">
+<div class="comment-avatar-wrap">
+<div class="comment-panda-wrap animate-bounce">
+<svg class="panda-svg" style="width:26px;height:26px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</div>
+<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ExpatDavid" class="comment-avatar" alt="Expat">
+</div>
+<div style="width:2px"></div>
+<div class="comment-content">
+<div class="comment-card">
+<div class="comment-meta">🇬🇧 <span>David · 在华5年</span> <span class="comment-time">10:33</span></div>
+<div class="comment-text">I second that! I've been here 5 years. Get Alipay International - it works perfectly with my UK bank card! Also, most museums and tourist spots now accept foreign cards at the ticket counter.</div>
+<div class="action-btn">↩️ 回复</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 评估面板 -->
+<div>
+<div class="panel">
+<div class="eval-card">
+<div class="eval-header">
+<div class="eval-title">📊 G-Eval 质量评估</div>
+<div class="eval-subtitle">AI自动质量检测 · 实时打分</div>
+</div>
+<div class="eval-body">
+<div class="score">
+<div class="score-label">🤖 拟人度</div>
+<div class="score-header">
+<span class="score-value">4.6 / 5.0</span>
+</div>
+<div class="score-bar"><div class="score-fill score-blue" style="width:92%"></div></div>
+</div>
+<div class="score">
+<div class="score-label">🔗 连贯性</div>
+<div class="score-header">
+<span class="score-value">4.9 / 5.0</span>
+</div>
+<div class="score-bar"><div class="score-fill score-green" style="width:98%"></div></div>
+</div>
+<div class="score">
+<div class="score-label">🌏 文化匹配度</div>
+<div class="score-header">
+<span class="score-value">4.7 / 5.0</span>
+</div>
+<div class="score-bar"><div class="score-fill score-purple" style="width:94%"></div></div>
+</div>
+<div class="status">
+<div class="pass">✅ 评估通过 · 高质量数据</div>
+</div>
+<div class="desc">
+<div class="desc-title">📝 评估说明</div>
+<div class="desc-item">• <strong>拟人度</strong>：衡量内容与真实用户表达的相似程度</div>
+<div class="desc-item">• <strong>连贯性</strong>：评估上下文理解和逻辑连贯性</div>
+<div class="desc-item">• <strong>文化匹配度</strong>：检查是否符合目标文化的表达习惯</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const zones = [
+{icon:'🌍',name:'外国人专区',title:'🌍 外国人专区',desc:'来自世界各地的外国朋友在中国的生活故事'},
+{icon:'🎓',name:'留学生专区',title:'🎓 留学生专区',desc:'各国留学生在华学习、生活、文化交流分享'},
+{icon:'🏠',name:'本地人专区',title:'🏠 本地人专区',desc:'本地人的日常生活、吃喝玩乐、城市推荐'}
+];
+
+const posts = [
+// 外国人专区
+{flag:'🇺🇸',name:'John · 美国游客',role:'首次来华',location:'北京故宫',content:'Hey everyone! I just arrived in Beijing and tried to buy some souvenirs at the Palace Museum. The vendor only accepts WeChat Pay, but I don\'t have a Chinese bank account. 😟 Any suggestions on how I can make payments easily in China?',tags:['#移动支付','#外国游客','#求助']},
+// 留学生专区
+{flag:'🇫🇷',name:'Emma · 法国留学生',role:'北京大学',location:'五道口',content:'大家好！我在北大交换一年，想问问北京哪里有正宗的法餐厅？另外，中国的奶茶太好喝了！求推荐五道口附近的奶茶店！🧋',tags:['#留学生','#美食','#北京']},
+// 本地人专区
+{flag:'🇨🇳',name:'小李 · 北京土著',role:'资深吃货',location:'胡同里',content:'跟您各位聊聊，北京最地道的炸酱面就得在胡同里找！别去那些网红店，找老小区楼下开了十年以上的馆子，那叫一个香！有没有同好的？',tags:['#本地美食','#老北京','#推荐']}
+];
+
+function switchTab(index){
+// 更新标签样式
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach((tab,i)=>{
+tab.classList.toggle('active',i===index);
+});
+
+// 更新内容区标题
+const header = document.getElementById('zoneHeader');
+header.innerHTML = `
+<div class="zone-title">
+<span class="panda-svg panda-svg-small">
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</span>
+<span class="zone-badge">${zones[index].title}</span>
+</div>
+<p class="zone-desc">${zones[index].desc}</p>
+`;
+
+// 更新主帖内容
+const post = posts[index];
+const mainContent = document.getElementById('mainContent');
+const mainPost = `
+<div class="card" style="margin-bottom:28px">
+<div class="card-pad">
+<div class="flex">
+<div class="avatar-wrap">
+<div class="panda-wrap animate-bounce">
+<svg class="panda-svg panda-svg-small" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="40" fill="#000"/>
+<circle cx="50" cy="55" r="28" fill="#fff"/>
+<ellipse cx="30" cy="35" rx="12" ry="14" fill="#000"/>
+<ellipse cx="70" cy="35" rx="12" ry="14" fill="#000"/>
+<circle cx="32" cy="37" r="6" fill="#fff"/>
+<circle cx="68" cy="37" r="6" fill="#fff"/>
+<circle cx="32" cy="37" r="3" fill="#000"/>
+<circle cx="68" cy="37" r="3" fill="#000"/>
+<ellipse cx="40" cy="52" rx="8" ry="6" fill="#000"/>
+<ellipse cx="60" cy="52" rx="8" ry="6" fill="#000"/>
+<circle cx="50" cy="58" r="4" fill="#000"/>
+<path d="M44 64 Q50 70 56 64" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+</div>
+<img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${post.name}" class="avatar" alt="Avatar">
+<span class="flag">${post.flag}</span>
+</div>
+<div style="flex:1">
+<div style="margin-bottom:10px">
+<span class="name">${post.name}</span>
+<span class="role-tag">${post.role}</span>
+</div>
+<div class="time">
+<span>📍 ${post.location}</span>
+<span>⏰ 2026/5/20 ${index===0?'10:30':index===1?'14:20':'18:45'}:00</span>
+</div>
+</div>
+</div>
+<div class="content">${post.content}<span class="animate-pulse" style="margin-left:6px">|</span></div>
+<div class="tags">
+${post.tags.map(tag=>`<span class="tag-item">${tag}</span>`).join('')}
+</div>
+<div class="actions">
+<div class="action-btn">💬 回复</div>
+<div class="action-btn">🧠 思考过程</div>
+</div>
+</div>
+</div>
+`;
+mainContent.innerHTML = mainContent;
+}
+</script>
+
+</body>
+</html>

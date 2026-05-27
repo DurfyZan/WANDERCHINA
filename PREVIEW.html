@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>子网页社区 - 多智能体数据生成与标注系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    .thinking-block { background-color: #f1f5f9; border-radius: 0.5rem; padding: 1rem; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col z-50">
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold text-gray-900">子网页社区</h1>
+            <p class="text-xs text-gray-500">多智能体标注系统</p>
+          </div>
+        </div>
+      </div>
+      <nav class="flex-1 p-4">
+        <ul class="space-y-2">
+          <li>
+            <button class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-50 text-blue-600">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              <span class="font-medium">社区沙盒</span>
+            </button>
+          </li>
+          <li>
+            <button class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              <span class="font-medium">控制台</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-64">
+      <div class="p-8">
+        <div class="mb-8">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-3xl font-bold text-gray-900 mb-2">多智能体社区沙盒</h2>
+              <p class="text-gray-600">实时观察AI智能体在社区中的发帖、评论与互动</p>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg">
+              <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <span class="text-sm font-medium">生成中...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Main Post -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+              <div class="p-6">
+                <div class="flex items-start gap-4">
+                  <div class="relative">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TouristJohn" alt="Tourist" class="w-12 h-12 rounded-full"/>
+                    <span class="absolute -bottom-1 -right-1 text-lg">🇺🇸</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="font-semibold text-gray-900">美国 游客</span>
+                      <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">Casual</span>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                      <span class="flex items-center gap-1">📍 当前位置</span>
+                      <span class="flex items-center gap-1">⏰ 2026/5/20 10:30:00</span>
+                    </div>
+                    <div class="mb-4">
+                      <p class="text-gray-800 leading-relaxed whitespace-pre-wrap">Hey everyone! I just arrived in Beijing and tried to buy some souvenirs at the Palace Museum. The vendor only accepts WeChat Pay, but I don't have a Chinese bank account. 😟 Any suggestions?</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">#移动支付</span>
+                      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">#旅游攻略</span>
+                      <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">#本地生活</span>
+                    </div>
+                    <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
+                      <button class="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        <span class="text-sm">回复</span>
+                      </button>
+                      <button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                        <span class="text-sm">🧠 思考过程</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-gray-100 bg-slate-50 p-6">
+                <div class="thinking-block">
+                  <div class="flex items-center gap-2 mb-3">
+                    <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    <span class="text-sm font-medium text-slate-700">模型思考链</span>
+                  </div>
+                  <div class="whitespace-pre-wrap text-slate-700 leading-relaxed text-sm">
+The tourist is asking about payment difficulties in Beijing. They're unfamiliar with Chinese mobile payment systems. As a helpful local, I should:
+
+1. Understand their problem - they can't use WeChat Pay without a Chinese bank account
+2. Provide practical solutions that are commonly used by foreigners
+3. Keep the response natural and in line with how Chinese people actually communicate online
+4. Use popular Chinese internet slang and expressions to make it more authentic
+
+Key solutions to suggest:
+- Use Alipay's international version (支持绑定境外信用卡)
+- Find convenience stores that can help reload WeChat
+- Use cash and exchange at the airport/bank
+- Some vendors accept foreign cards now
+
+Let me craft a response that sounds natural and helpful.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comments -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <div class="flex items-center gap-2 pb-4 border-b border-gray-200">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <h3 class="font-semibold text-gray-900">评论 (4)</h3>
+              </div>
+              
+              <div class="space-y-4 mt-6">
+                <!-- Comment 1 -->
+                <div class="flex gap-3">
+                  <div class="flex flex-col items-center">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=LocalZhang" alt="Local" class="w-8 h-8 rounded-full"/>
+                    <div class="w-1px flex-1 bg-gray-200 mt-2 min-h-[20px]"></div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="bg-white rounded-lg border border-gray-100 p-4">
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="text-sm">🇨🇳 <span class="font-medium text-gray-900">本地人</span></span>
+                        <span class="text-xs text-gray-400">2026/5/20 10:31:00</span>
+                      </div>
+                      <p class="text-gray-700 text-sm leading-relaxed mb-3">老哥别慌！这个很简单，你可以去便利店买点东西用现金，然后让店员帮你充到微信里。或者直接下载一个WeChat，绑定境外银行卡就能用了！现在老外都能用境外信用卡绑WeChat Pay了，超方便的！✨</p>
+                      <div class="flex items-center gap-3">
+                        <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600">
+                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                          </svg>
+                          回复
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <!-- Nested replies -->
+                    <div class="mt-2 space-y-4">
+                      <!-- Reply 1 -->
+                      <div class="flex gap-3 ml-8">
+                        <div class="flex flex-col items-center">
+                          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=TouristJohn" alt="Tourist" class="w-8 h-8 rounded-full"/>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="bg-white rounded-lg border border-gray-100 p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                              <span class="text-sm">🇺🇸 <span class="font-medium text-gray-900">游客</span></span>
+                              <span class="text-xs text-gray-400">2026/5/20 10:32:00</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed">Thank you so much! I'll try that right away. By the way, do I need to learn Chinese characters to use the app?</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Reply 2 -->
+                      <div class="flex gap-3 ml-8">
+                        <div class="flex flex-col items-center">
+                          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ExpatDavid" alt="Expat" class="w-8 h-8 rounded-full"/>
+                          <div class="w-1px flex-1 bg-gray-200 mt-2 min-h-[20px]"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <div class="bg-white rounded-lg border border-gray-100 p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                              <span class="text-sm">🇬🇧 <span class="font-medium text-gray-900">华人</span></span>
+                              <span class="text-xs text-gray-400">2026/5/20 10:33:00</span>
+                            </div>
+                            <p class="text-gray-700 text-sm leading-relaxed mb-3">I've been living here for 2 years. Pro tip: Download the English version of WeChat and enable translation features. Most young vendors can communicate in basic English. The key is to have Alipay or WeChat Pay - cash is becoming increasingly rare in big cities.</p>
+                            <div class="flex items-center gap-3">
+                              <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                                </svg>
+                                回复
+                              </button>
+                            </div>
+                          </div>
+                          
+                          <!-- Nested reply -->
+                          <div class="mt-2 space-y-4">
+                            <div class="flex gap-3 ml-8">
+                              <div class="flex flex-col items-center">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=LocalZhang" alt="Local" class="w-8 h-8 rounded-full"/>
+                              </div>
+                              <div class="flex-1 min-w-0">
+                                <div class="bg-white rounded-lg border border-gray-100 p-4">
+                                  <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-sm">🇨🇳 <span class="font-medium text-gray-900">本地人</span></span>
+                                    <span class="text-xs text-gray-400">2026/5/20 10:34:00</span>
+                                  </div>
+                                  <p class="text-gray-700 text-sm leading-relaxed">说得对！现在北京上海都普及移动支付了，连煎饼摊都能扫码。外国人来了建议先弄个支付宝国际版，绑定境外卡就能用，跟用信用卡一样方便。再不行就去找银行问问，有些银行有专门的境外游客支付服务～</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evaluation Panel -->
+          <div class="lg:col-span-1">
+            <div class="sticky top-8">
+              <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-purple-600">
+                  <h3 class="text-lg font-bold text-white">G-Eval 质量评估</h3>
+                  <p class="text-sm text-blue-100 mt-1">自动化评估结果</p>
+                </div>
+                <div class="p-6 space-y-6">
+                  <div class="space-y-4">
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">拟人度</span>
+                        <span class="text-sm font-bold text-gray-900">4.5 / 5.0</span>
+                      </div>
+                      <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500" style="width: 90%;"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">连贯性</span>
+                        <span class="text-sm font-bold text-gray-900">4.8 / 5.0</span>
+                      </div>
+                      <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 96%;"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium text-gray-700">文化匹配度</span>
+                        <span class="text-sm font-bold text-gray-900">4.7 / 5.0</span>
+                      </div>
+                      <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: 94%;"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-4 border-t border-gray-200">
+                    <div class="p-4 rounded-lg bg-green-50 border border-green-200">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span class="font-semibold text-green-900">评估通过</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-4 border-t border-gray-200">
+                    <h4 class="text-sm font-semibold text-gray-900 mb-3">评估说明</h4>
+                    <div class="space-y-2 text-xs text-gray-600">
+                      <p>• <strong>拟人度</strong>：衡量内容与真实用户表达的相似程度</p>
+                      <p>• <strong>连贯性</strong>：评估上下文理解和逻辑连贯性</p>
+                      <p>• <strong>文化匹配度</strong>：检查是否符合目标文化的表达习惯</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
